@@ -32,7 +32,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <h2>Deployment and Configuration Steps</h2>
 
 
-  <h3>🟢 Step 1: Set Up Resources in Azure</h3>
+  <h3>Step 1: Set Up Resources in Azure</h3>
   <p>In step 1, we’re going to create a Domain Controller, a client (Microsoft VM), and set the Domain Controller’s NIC Private IP Address to be static.</p>
   
   <h4>Creating the Domain Controller</h4>
@@ -41,7 +41,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
   
   <p>A domain controller is a server that manages and authenticates user access to a network domain. Domain controllers store user account information such as usernames and passwords and controls access to network resources. They help authorize and authenticate users, facilitate efficient and streamlined network administration, and improve overall security.</P>
   
-  <h4>🔵 Process for Creating DC-1:</h4>
+  <h4>Process for Creating DC-1:</h4>
   
   1. Naviagte to Microsoft Azure and select 'Virtual Machines'
   2. Within the Virtual Machines creation portal, create a Resource Group to hold both the Domain Controller and Client. In this instance, we'll name it: "AD-Lab" (ActiveDirectory-Lab)
@@ -65,7 +65,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
  <p>The client, in relation to the domain controller, is a device that connects to the network domain and relies on the domain controller for user authentication, access permissions, etc. The domain controller is the 'big brain' that lets the device/client know what to do/who's allowed to do what. The client interacts with the domain controller to log in, access shared resources, etc.</p>
     <p>We're creating a client device (Microsoft Windows) to witness the borrowing of user account information from our Domain Controller.</P>
     
- <h4>🔵 Process for Creating the Client:</h4>
+ <h4>Process for Creating the Client:</h4>
     
 1. Navigate to Microsoft Azure & select 'Virtual Machines'
 2. Select the Resource Group: 'AD-Lab'
@@ -92,7 +92,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <p>Given that it plays such a crucial role in centralizing and streamlining networking, we want our network devices to always be able to locate the Domain Controller for consistent instruction and communication. A static IP address prevents potential disruptions caused by a dynamic IP address. Thus, we must change the IP address from dynamic to static (meaning the IP address numerical values never change).</p>
 
-<h4>🔵 Process for Setting DC-1 NIC Private IP to Static:</h4>
+<h4>Process for Setting DC-1 NIC Private IP to Static:</h4>
   
 1. Navigate to Azure > 'Virtual Machines' > and select our Domain Controller "DC-1"
 2. Select 'Networking' > Select 'Network Interface'
@@ -111,7 +111,7 @@ We have now switched the Domain Controller's NIC Private IP Address to be static
 
 <br>
 
-  <h3>🟢 Step 2: Ensure & Establish Connectivity between the Client and Domain Controller</h3>
+  <h3>Step 2: Ensure & Establish Connectivity between the Client and Domain Controller</h3>
   
   <p>The next step is to ensure connectivity between the Client and the Domain Controller. We want to make sure that our machines can talk to one another so that once we add users accounts to DC-1, Client-1 will be able to access them.</p>
   
@@ -119,7 +119,7 @@ We have now switched the Domain Controller's NIC Private IP Address to be static
   
   <p>First, we’re going to log into the Client-1 VM. To do this, we must retrieve the Public IP Address and connect it to Remote Desktop Connection (if you’re using WindowsOS) or Microsoft Remote Desktop (if you’re using MacOS).</p>
   
-  <h4>🔵 Process for Logging into Client-1:</h4>
+  <h4>Process for Logging into Client-1:</h4>
   
   1. In the Azure Portal, navigate to 'Virtual Machines'
   2. Select 'Client-1'
@@ -146,7 +146,7 @@ However, most likely, this “ping” will fail due to the Domain Controller’s
 
 Firewalls sometimes block ICMP (Internet Control Message Protocol) traffic as a security measure to protect against potential network vulnerabilities. ICMP traffic includes various types of messages, such as ping requests and error messages, which can be exploited for network scanning, denial-of-service attacks, or information disclosure. Blocking ICMP can help prevent these types of attacks and limit potential exposure of sensitive information. However, it's worth noting that ICMP is also used for legitimate network troubleshooting and diagnostic purposes, so firewall rules should be carefully configured to balance security and operational needs.
 
-<h4>🔵 Process for Checking Connectivity:</h4>
+<h4>Process for Checking Connectivity:</h4>
 
 1. We need to get DC-1's private IP Address: Azure Portal > 'Virtual Machines' > DC-1
 2. Copy the NIC Private IP Address (Example: 10.0.0.4)
@@ -165,7 +165,7 @@ Firewalls sometimes block ICMP (Internet Control Message Protocol) traffic as a 
   
 <p>Since we were unable to “ping”/connect to our Domain Controller, we must open up the firewall to allow ICMP traffic. To do this, we must connect/log into our Domain Controller VM and alter the settings.</p>
 
-<h4>🔵 Process for Opening Up Firewall:</h4>
+<h4>Process for Opening Up Firewall:</h4>
   
 1. Navigate to Azure > 'Virtual Machines' > DC-1: Copy the Public IP Address (Example: 20.169.82.100)
 2. Open Remote Desktop Connection (Windows) or Microsoft Remote Desktop (MacOS) & paste the IP address and use the username/password created in Step 1 (Example: 20.169.82.100 ; darinstathos)
@@ -196,7 +196,7 @@ Firewalls sometimes block ICMP (Internet Control Message Protocol) traffic as a 
 
 <br>
 
-<h3>🟢 Step 3: Install Active Directory</h3>
+<h3>Step 3: Install Active Directory</h3>
   
 <Strong>What is Active Directory and why is it important?</strong>
   
@@ -204,7 +204,7 @@ Firewalls sometimes block ICMP (Internet Control Message Protocol) traffic as a 
 
 In simple terms, Active Directory is like a phonebook or a directory for a network. It keeps track of all the users, computers, and other resources within a network domain. It helps manage user accounts, control access to resources, and enforce security policies, making it easier for network administrators to organize and manage their network effectively.</p>
 
-<h4>🔵 Process for Installing Active Directory:</h4>
+<h4>Process for Installing Active Directory:</h4>
   
 1. Log into DC-1 VM using the Public IP Address & username/password (if not already)
 2. Once inside DC-1, use the search bar to go to Service Manager
@@ -227,7 +227,7 @@ We now have Active Directory installed on DC-1. However, we are not finished yet
   
 <p>For example, if you work for a large accounting firm or you're in school, you're given a username with a domain attached to it. You can then take your username and log into any computer on campus or in the office. Example: dstathos@univerity.edu or dstathos@accountingfirm.com.</p>
   
-  <h4>🔵 Process for Promoting to Domain Controller:</h4>
+  <h4>Process for Promoting to Domain Controller:</h4>
   
   For this example, we are using "mydomain.com". However, any domain is suitable. 
   
@@ -257,12 +257,12 @@ We now have Active Directory installed on DC-1. However, we are not finished yet
 
 <br>
   
-<h3>🟢 Step 4: Create an Admin and a Normal User Account in Active Directory</h3>
+<h3>Step 4: Create an Admin and a Normal User Account in Active Directory</h3>
   
 <p>Now that Active Directory has been installed, our Domain Controller became official with its domain, it’s now time to create an admin and normal user account in AD.</p>
 <p>Admins are able to create, modify, and delete user accounts, manage access permissions, etc. They can configure and enforce security policies such as password requirements and account lockout settings. They can also manage the structure of the domain, delegate admin tasks, etc.</p>
   
-<h4>🔵 Process for Creating Organizational Units: Employees and Admins</h4>
+<h4>Process for Creating Organizational Units: Employees and Admins</h4>
   
   1. Inside DC-1 VM, navigate to ‘Active Directory Users and Computers’
 
@@ -283,7 +283,7 @@ We now have Active Directory installed on DC-1. However, we are not finished yet
 
 <br>
   
-<h4>🔵 Process for Creating an Employee/Admin & then Assigning Role of Admin</h4>
+<h4>Process for Creating an Employee/Admin & then Assigning Role of Admin</h4>
   
 <p>Now that we have our organizational units, we want to create an Admin and assign them the role of “Admin” so that they can fulfill admin duties.</p>
 
@@ -317,7 +317,7 @@ We now have Active Directory installed on DC-1. However, we are not finished yet
 
 <br>
   
-<h4>🔵 Log Out of DC-1 and Log In as New Admin</h4>
+<h4>Log Out of DC-1 and Log In as New Admin</h4>
 
 <p>Now that Jane Doe is an admin, we can log out of our Domain Controller and log back in as Jane Doe.</p>
 username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
@@ -326,7 +326,7 @@ username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
 
 <img src="https://i.imgur.com/WcNCaDu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
-<h3>🟢 Step 5: Join Client-1 (Windows VM) to the Domain</h3>
+<h3>Step 5: Join Client-1 (Windows VM) to the Domain</h3>
 
 <h4>Set Client-1's DNS settings to the DC-1's Private IP Address + Restart</h4>
 
@@ -334,7 +334,7 @@ username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
 
 <p>Setting a client's DNS settings to the domain controller's private IP address is important because it helps the client find and connect to important resources within a network. It ensures that the client can communicate with the domain controller for things like logging in, accessing shared files and printers, and finding other computers on the network. It's like having the right address book entry to reach the central hub of the network, making everything work smoothly.</p>
 
-  <h4>🔵 Process for Setting Client-1 DNS Settings:</h4>
+  <h4>Process for Setting Client-1 DNS Settings:</h4>
     
 1. Go to Azure Portal > 'Virtual Machines' > 'DC-1 VM' > Copy the Private IP address in the Overview (Example: 10.0.0.4)
 2. Go to Client-1 VM > 'Networking' > 'Network Interface' 
@@ -353,7 +353,7 @@ username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
 
 <br>
     
-<h4>🔵 Process for Joining Client-1 to the Domain and Re-login as Admin</h4>
+<h4>Process for Joining Client-1 to the Domain and Re-login as Admin</h4>
 
 <p>Now it’s time to actually add Client-1 onto the domain. We’re going to login with the original user we created in the beginning and join Client-1 to the domain. Once Client-1 is on the domain, we are able to use our admin Jane Doe.</p>
 
@@ -383,11 +383,11 @@ username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
 <br>
     
 
-<h3>🟢 Step 6: Setup and Establish Remote Desktop for Non-Administrative Users on Client-1</h3>
+<h3>Step 6: Setup and Establish Remote Desktop for Non-Administrative Users on Client-1</h3>
 
 <p>We're going to set it up so all domain users can remote login into Client-1. Right now, only admins can do this.</p>
 
-<h4>🔵 Process for Setting Up Remote Desktop for Non-Admins:</h4>
+<h4>Process for Setting Up Remote Desktop for Non-Admins:</h4>
     
 1. Inside Client-1 VM, right-click Windows start icon at bottom of screen > 'system' properties
 2. Select 'Remote desktop' > 'Select Users that can remotely access PC' > 'Add' > 'Domain Users' > 'OK'
@@ -402,11 +402,11 @@ username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
 * Group Policy allows us to do this remotely and with MANY computers (hundred or thousands of computers instantly instead of logging into each computer one by one), but that’s beyond the scope of this exercise
 
 
-<h3>🟢 Step 7: Create additional users and log into Client-1 with those users</h3>
+<h3>Step 7: Create additional users and log into Client-1 with those users</h3>
 
 <p>Now that we’ve set it up so non-administrative users (regular users) can access Client-1, we’re going to put this into action by creating many users and logging into Client-1 with one of those users.</p>
 
-<h4>🔵 Process for Creating Additional Users:</h4>
+<h4>Process for Creating Additional Users:</h4>
     
 1. Log into DC-1 VM as Jane Doe: mydomain.com\jane_admin
 2. Use the search bar to open up 'Powershell ISE' > right-click to 'run as administrator'
