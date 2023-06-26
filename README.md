@@ -48,7 +48,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
   3. We'll create the Virtual Machine Name: "DC-1" (DomainController-1)
   4. Select the image: Windows Server 2022 Database Azure Edition - x64 Gen2
   5. Size: 2vcpus is recommended as it allows for the system to still run efficiently without eating up too many resources
-  6. Create a username/password (Example: darinstathos)
+  6. Create a username/password
   7. Take note that Azure automatically created a virtual network. Both our DC-1 and Client-1 will exist on the same virtual network connectivity. There is nothing left for us to edit, so we will select “Review + Create”
   
 <img src="https://i.imgur.com/0cDyCbn.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -72,7 +72,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 3. Virtual Machine Name: 'Client-1'
 4. Select image: 'Windows 10 Pro, version 22H2 -x64Gen'
 5. Size: 2vcpus
-6. Create a username/password: (Example: darinstathos)
+6. Create a username/password
 7. Under Licensing, check the box: "I can confirm I have eligible Windows 10/11 license with multi-tenant hosting rights."
 8. Forward to the next page: Next: Disks >, Next: Networking > Take note that Client-1 was automatically put on the same network as DC-1. This is important so that the two can later communicate with one another. 
 
@@ -126,7 +126,7 @@ We have now switched the Domain Controller's NIC Private IP Address to be static
   3. Copy the Public IP Address to clipboard (Example shown: 20.163.26.26)
   4. Open Remote Desktop Connection (Windows) or Microsoft Remote Desktop (MacOS: can be downloaded from App Store)
   5. Paste the IP address (Example shown: 20.163.26.26)
-  6. Log in using the username/password created earlier in Step 1. (Example: darinstathos)
+  6. Log in using the username/password created earlier in Step 1.
 
 <br>
 
@@ -168,7 +168,7 @@ Firewalls sometimes block ICMP (Internet Control Message Protocol) traffic as a 
 <h4>Process for Opening Up Firewall:</h4>
   
 1. Navigate to Azure > 'Virtual Machines' > DC-1: Copy the Public IP Address (Example: 20.169.82.100)
-2. Open Remote Desktop Connection (Windows) or Microsoft Remote Desktop (MacOS) & paste the IP address and use the username/password created in Step 1 (Example: 20.169.82.100 ; darinstathos)
+2. Open Remote Desktop Connection (Windows) or Microsoft Remote Desktop (MacOS) & paste the IP address and use the username/password created in Step 1
 3. Inside of DC-1 VM, navigate to the search bar and type in “wf.msc” or “firewall”
 
 <br>
@@ -247,7 +247,7 @@ We now have Active Directory installed on DC-1. However, we are not finished yet
 <h4>Restart & Log back into DC-1 as user: mydomain.com\[username]</h4>
 
 1. It is normal for the computer to need to restart. When the computer restarts, if the IP address changes, we are sure to navigate back to Azure Portal and copy the DC-1 Public IP address. We set the Private IP address to be static, but it’s possible for the Public IP to change.</p>
-2. Once booted out, we can log back into DC-1 using the domain we have now set up: mydomain.com\darinstathos (or) darinstathos@mydomain.com
+2. Once booted out, we can log back into DC-1 using the domain we have now set up
 3. DC-1 is now officially a domain controller 
 
 <br>
@@ -357,7 +357,7 @@ username: jane_admin@mydomain.com (or) mydomain.com\jane_admin
 
 <p>Now it’s time to actually add Client-1 onto the domain. We’re going to login with the original user we created in the beginning and join Client-1 to the domain. Once Client-1 is on the domain, we are able to use our admin Jane Doe.</p>
 
-1. Log back into Client-1 VM with original user from Step 1. (Example: darinstathos)
+1. Log back into Client-1 VM with original user from Step 1.
 2. Right-click the Windows start icon > 'System' 
 3. 'Rename this PC (advanced)' > 'Change' > 'Domain'
 4. Change the domain to: mydomain.com (or whatever domain you'd like)
